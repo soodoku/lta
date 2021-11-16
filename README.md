@@ -14,5 +14,5 @@ We use the list of [zip codes](data/us_zipcodes.csv) and iterate over [FCC DTV M
 
 `zipcode, callsign, network, channel_number, band, ia, signal_strength (strong/moderate, weak, no signal), facility_id, city_of_license, rf_channel, rx_strength, tower_distance, repacked_channel, repacking_dates`
 
-![example.png]
+![example](example.png)
 
