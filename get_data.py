@@ -13,12 +13,17 @@ browser.get("https://www.fcc.gov/media/engineering/dtvmaps")
 input_box = browser.find_element(By.CLASS_NAME, "map-address-container")
 input_box = input_box.find_element(By.TAG_NAME, "form")
 input_box = input_box.find_element(By.ID, "startpoint")
+data = {}
 for x in zip_code:
     input_box.clear()
     input_box.send_keys(x)
     time.sleep(2)
     browser.find_element(By.ID, "btnSub").click()
     time.sleep(5)
+    # save page
+    source = browser.page_source
+    with open(f"webpages/{x}.html", "w") as fp:
+        fp.write(source)
     # scrape data
     # frist get table having data
     soup = BeautifulSoup(browser.page_source, "html.parser")
@@ -27,7 +32,7 @@ for x in zip_code:
     data_table = tables[2]
     # get rows
     data_table = data_table.find("tbody")
-    data = {}
+    page_data = []
     for strength in [1, 2, 3, 4]:
         for row in data_table.find_all("tr", {"class": f"strength{strength}"}):
             st = re.findall(r'onclick="getdetail(.*)" style="', str(row))
@@ -46,10 +51,14 @@ for x in zip_code:
                 "facility_id": re.search(r"Facility ID: \d*", str(st))
                 .group(0)
                 .replace("Facility ID: ", ""),
-                "city_of_license": re.search(r"City of License.*, ", str(st))
+                "city_of_license": re.search(
+                    r"City of License: [a-z-A-Z ]*, [A-Z]*", str(st)
+                )
                 .group(0)
-                .replace("City of License: ", "")[:-2],
-                "rx_strength": re.search(r"RX Strength: .\d", str(st))
+                .replace("City of License: ", ""),
+                "rx_strength": re.search(
+                    r"RX Strength: \d* [a-z-A-Z]*\/[a-z]*", str(st)
+                )
                 .group(0)
                 .replace("RX Strength: ", ""),
                 "tower_distance": re.search(r"Tower Distance: .*; ", str(st))
@@ -71,7 +80,9 @@ for x in zip_code:
                 station["repacked_channel"] = None
             try:
                 station["repacking_dates"] = (
-                    re.search(r"Repacking Dates: \d*", str(st))
+                    re.search(
+                        r"Repacking Dates: \d*\/\d*\/\d* to \d*\/\d*\/\d*", str(st)
+                    )
                     .group(0)
                     .replace("Repacking Dates: ", "")
                 )
@@ -85,5 +96,7 @@ for x in zip_code:
                 )
             except:
                 station["rf_channel"] = None
-            data[x] = station
+            page_data.append(station)
             print(station)
+    data[x] = page_data
+print(data)
