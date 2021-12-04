@@ -4,6 +4,7 @@ import time
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
+import json
 
 df = pd.read_csv("./data/us_zipcodes.csv")
 zip_code = list(df["zip_code"])
@@ -99,4 +100,6 @@ for x in zip_code:
             page_data.append(station)
             print(station)
     data[x] = page_data
-print(data)
+browser.close()
+with open("data.json", "w") as fp:
+    json.dump(data, fp)
