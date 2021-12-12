@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import re
 import pandas as pd
 import json
+import pdb
 
 df = pd.read_csv("./data/us_zipcodes.csv")
 zip_code = list(df["zip_code"])
@@ -14,15 +15,19 @@ browser.get("https://www.fcc.gov/media/engineering/dtvmaps")
 input_box = browser.find_element(By.CLASS_NAME, "map-address-container")
 input_box = input_box.find_element(By.TAG_NAME, "form")
 input_box = input_box.find_element(By.ID, "startpoint")
-data = {}
 for x in zip_code:
+    print(x)
     input_box.clear()
     input_box.send_keys(x)
     time.sleep(2)
     browser.find_element(By.ID, "btnSub").click()
-    time.sleep(5)
+    time.sleep(10)
     # save page
-    source = browser.page_source
+    try:
+        source = browser.page_source
+    except:
+        print(x, "address not found")
+        continue
     with open(f"webpages/{x}.html", "w") as fp:
         fp.write(source)
     # scrape data
@@ -30,7 +35,10 @@ for x in zip_code:
     soup = BeautifulSoup(browser.page_source, "html.parser")
     table_soup = soup.find("div", {"id": "contourdata"})
     tables = table_soup.find_all("table")
-    data_table = tables[2]
+    try:
+        data_table = tables[2]
+    except:
+        print(x, "there is some problem with page")
     # get rows
     data_table = data_table.find("tbody")
     page_data = []
@@ -52,11 +60,6 @@ for x in zip_code:
                 "facility_id": re.search(r"Facility ID: \d*", str(st))
                 .group(0)
                 .replace("Facility ID: ", ""),
-                "city_of_license": re.search(
-                    r"City of License: [a-z-A-Z ]*, [A-Z]*", str(st)
-                )
-                .group(0)
-                .replace("City of License: ", ""),
                 "rx_strength": re.search(
                     r"RX Strength: \d* [a-z-A-Z]*\/[a-z]*", str(st)
                 )
@@ -97,9 +100,14 @@ for x in zip_code:
                 )
             except:
                 station["rf_channel"] = None
+            station["city_of_license"] = (
+                re.search(
+                    r"City of License: [a-z-A-Z .&/;`]*[,]*[A-Z]*[,][ A-Z]*",
+                    str(st),
+                )
+                .group(0)
+                .replace("City of License: ", "")
+            )
             page_data.append(station)
             print(station)
-    data[x] = page_data
 browser.close()
-with open("data.json", "w") as fp:
-    json.dump(data, fp)
