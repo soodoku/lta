@@ -1,4 +1,4 @@
-## Local News Areas
+## Local Television Area
 
 "A media market, broadcast market, media region, designated market area (DMA), television market area, or simply market is a region where the population can receive the same (or similar) television and radio station offerings." --- [https://en.wikipedia.org/wiki/Media_market](Wikipedia)
 
