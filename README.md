@@ -35,7 +35,7 @@ We use the list of [zip codes](data/us_zipcodes.csv) and iterate over [FCC DTV M
    	2. Filters out zip codes with no data
    	3. For each zip code, finds all zip codes where overlap between list of tv stations is as large as `diff`.
 
-   We run it for diff = 0 and diff = 1 and save outputs separately as output_diff_1.csv, output_diff_2.csv
+   We run it for diff = 0 and diff = 1 and save outputs in [output_diff_1.csv](output/output_diff_1.csv) and [output_diff_2.csv](output/output_diff_2.csv) respectively.
 
 2. [k_means](scripts/k_means.py): a wrapper for k-means where we again pass on the same information with k = 200
 
@@ -49,6 +49,8 @@ We use the list of [zip codes](data/us_zipcodes.csv) and iterate over [FCC DTV M
    1. k-means in the feature space where each tv station gets a separate column (filered by signal strength)
 
    Output = Append an Integer field `cluster_number` to each row.
+
+   We run it for k = 200 and save the output in [k_means_200.csv](output/k_means_200.csv).
 
 ### Authors
 
