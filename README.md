@@ -8,13 +8,15 @@ Using [FCC DTV Maps](https://www.fcc.gov/media/engineering/dtvmaps), we first cr
 
 ### Workflow
 
-We use the list of [zip codes](data/us_zipcodes.csv) and iterate over [FCC DTV Maps](https://www.fcc.gov/media/engineering/dtvmaps) and produce a CSV with the following columns:
+We use the list of [zip codes](data/us_zipcodes.csv) and iterate over [FCC DTV Maps](https://www.fcc.gov/media/engineering/dtvmaps) and produce [a CSV](output/stations.csv) with the following columns:
 
-(each zipcode will have multiple rows --- one row per channel)
+(each zipcode has multiple rows --- one row per channel)
 
 `zipcode, callsign, network, channel_number, band, ia, signal_strength (strong/moderate, weak, no signal), facility_id, city_of_license, rf_channel, rx_strength, tower_distance, repacked_channel, repacking_dates`
 
 ![example](example.png)
+
+For ~ 2,000 zip codes, the search came back empty. Here's the list of those [zip codes](output/failed_search.csv). The log files are posted [here](output/logs.tar.gz).  
 
 ### Clustering
 
