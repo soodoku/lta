@@ -26,7 +26,7 @@ For ~ 2,000 zip codes, the search came back empty. Here's the [log file](output/
 
 ### Clustering
 
-1. [group_zips](scripts/cluster_manhattan_distance_optimized.ipynb): clusters zip codes based on overlap between list of TV stations (with certain signal strength) and appends the grouping variable. We use deterministic (within a certain manhattan distance) multi-assignment (each zipcode can be part of multiple clusters) clustering. We run it for diff = 0, 1, and 2 and save outputs in [output_diff_0.csv (zipped)](output/output_diff_0.zip), [output_diff_1.csv (zipped)](output/output_diff_1.zip) and [output_diff_2.csv (zipped)](output/output_diff_2.zip) respectively.
+1. [group_zips](scripts/04_manhattan_distance.ipynb): clusters zip codes based on overlap between list of TV stations (with certain signal strength) and appends the grouping variable. We use deterministic (within a certain manhattan distance) multi-assignment (each zipcode can be part of multiple clusters) clustering. We run it for diff = 0, 1, and 2 and save outputs in [new_diff_0_group_hash.csv (zipped)](output/new_diff_0_group_hash.zip), [new_diff_1_group_hash.csv (zipped)](output/new_diff_1_group_hash.zip) and [new_diff_2_group_hash.csv (zipped)](output/new_diff_2_group_hash.zip.zip) respectively.
 
 2. [k_means](scripts/05_k_means.ipynb): we use k-means to cluster zip codes based on overlap between list of TV stations (with certain signal strength) and appends the grouping variable. We run it for k = 200 and [save the output in (k_means_200.csv (zipped)](output/k_means_200.zip).
 
