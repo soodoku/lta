@@ -4,7 +4,7 @@
 
 In the Internet era, with an ever increasing proportion of households that have 'cut-the-cord,' media markets mean less than ever. But local television news continues to draw older people. And local network affiliates are still an important part of media 'diets' of older Americans. 
 
-Using [FCC DTV Maps](https://www.fcc.gov/media/engineering/dtvmaps), we first create a comprehensive database of all local channels per zip code. Then, we cluster zip codes using k-means, choosing k in a way that follows the 'elbow' rule. We also produce a clustering with the constraint that zip codes can only be merged with other zip codes in the 'same' county (over 90% share).
+Using [FCC DTV Maps](https://www.fcc.gov/media/engineering/dtvmaps), we first create a comprehensive database of all local channels per zip code. Then, we cluster zip codes two different ways: 1. using k-means based on overlap between tv stations, 2. using manhattan distance.
 
 ### Scraping
 
