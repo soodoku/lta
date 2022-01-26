@@ -6,7 +6,7 @@ In the Internet era, with an ever increasing proportion of households that have 
 
 Using [FCC DTV Maps](https://www.fcc.gov/media/engineering/dtvmaps), we first create a comprehensive database of all local channels per zip code. Then, we cluster zip codes two different ways: 1. using k-means based on overlap between tv stations, 2. using manhattan distance.
 
-### Scraping
+### Data
 
 We use the list of [zip codes](data/us_zipcodes.csv) and iterate over [FCC DTV Maps](https://www.fcc.gov/media/engineering/dtvmaps) and produce [a CSV](output/stations.csv) with the following columns:
 
@@ -18,7 +18,7 @@ We use the list of [zip codes](data/us_zipcodes.csv) and iterate over [FCC DTV M
 
 For ~ 2,000 zip codes, the search came back empty. Here's the [log file](output/log.zip).
 
-**Scripts**
+#### Scraping Scripts
 
 1. [Scrape](scripts/01_get_data.py)
 2. [Generate CSV from Logs](scripts/02_generate_csv_from_logs.py)
